@@ -1,0 +1,18 @@
+{
+    "name": "GameWarriors.AudioDomain.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27390ec85a2067f4b814a6420cad63f7"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
