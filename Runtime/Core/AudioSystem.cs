@@ -13,7 +13,8 @@ namespace GameWarriors.AudioDomain.Core
         private const string SFX_VOLUME_NAME = "SFXVolume";
         private const string LOOP_VOLUME_NAME = "LoopVolume";
         private const int LOOP_GROUP_COUNT = 3;
-        [SerializeField] private AudioSource[] _onShotSource;
+        private readonly IAudioEventHandler _audioEventHandler;
+        private AudioSource[] _onShotSource;
         private int _onShotCounter;
         private LoopAudioGroup[] _loopSource;
 
@@ -44,7 +45,6 @@ namespace GameWarriors.AudioDomain.Core
             }
         }
 
-
         public bool SfxEnableState
         {
             get
@@ -74,10 +74,12 @@ namespace GameWarriors.AudioDomain.Core
         }
 
         [UnityEngine.Scripting.Preserve]
-        public AudioSystem()
+        public AudioSystem(IAudioEventHandler audioEventHandler)
         {
             IAudioResourceLoader audioResourceLoader = new DefaultResourceLoader();
             audioResourceLoader.LoadResourceAsync(AudioConfigData.RESOURCE_PATH, LoadComplete);
+            _audioEventHandler = audioEventHandler;
+            _audioEventHandler?.RegisterUpdate(AudioUpdate);
         }
 
 
@@ -173,7 +175,7 @@ namespace GameWarriors.AudioDomain.Core
             return -1;
         }
 
-        public void AudioUpdate()
+        private void AudioUpdate()
         {
             for (int i = 0; i < LOOP_GROUP_COUNT; ++i)
             {

@@ -1,7 +1,7 @@
 {
   "name": "com.gamewarriors.audiosystem",
-  "version": "0.1.0",
-  "displayName": "Audio System",
+  "version": "0.1.1",
+  "displayName": "audio System",
   "description": "This package provide base structure to using audio system which has one shot audio system and loop audio system by fade to anothers and grouping capability",
   "unity": "2019.1",
   "unityRelease": "0b5",
@@ -12,7 +12,6 @@
     "Audio one shot",
     "Audio playback",
     "Unity3d"
-
   ],
   "author": {
     "name": "Game Warriors",
