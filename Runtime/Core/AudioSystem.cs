@@ -132,7 +132,7 @@ namespace GameWarriors.AudioDomain.Core
         {
             if (_clipTable.TryGetValue(audioName, out var clip))
             {
-                PlayLoop(clip, volume);
+                PlayLoop(clip, volume, loopGroup);
             }
         }
 
@@ -142,27 +142,27 @@ namespace GameWarriors.AudioDomain.Core
                 return;
 
             _audioMixer.SetFloat(LOOP_VOLUME_NAME, PlayerPrefs.GetFloat(LOOP_VOLUME_NAME, _baseLoopVolume));
-            _loopSource[(int) loopGroup].Set(audioLoop, volume);
+            _loopSource[(int)loopGroup].Set(audioLoop, volume);
         }
 
         public void StopGroupLoopSource(EAudioLoopLayer loopGroup = EAudioLoopLayer.LoopGroup1)
         {
-            _loopSource[(int) loopGroup].Stop();
+            _loopSource[(int)loopGroup].Stop();
         }
 
         public void MuteGroupLoopSource(EAudioLoopLayer loopGroup = EAudioLoopLayer.LoopGroup1)
         {
-            _loopSource[(int) loopGroup].MuteFade();
+            _loopSource[(int)loopGroup].MuteFade();
         }
 
         public void UnmuteGroupLoopSource(EAudioLoopLayer loopGroup = EAudioLoopLayer.LoopGroup1)
         {
-            _loopSource[(int) loopGroup].UnmuteFade();
+            _loopSource[(int)loopGroup].UnmuteFade();
         }
 
         public void ChangeGroupLoopSourceVolume(EAudioLoopLayer loopGroup = EAudioLoopLayer.LoopGroup1, float targetVolume = 1)
         {
-            _loopSource[(int) loopGroup].ChangeVolumeFade(targetVolume);
+            _loopSource[(int)loopGroup].ChangeVolumeFade(targetVolume);
         }
 
         public float GetClipLength(string audioName)
