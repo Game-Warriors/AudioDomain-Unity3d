@@ -9,8 +9,8 @@ namespace GameWarriors.AudioDomain.Editor
 
     public class AudioConfigurationMenu : ScriptableWizard
     {
-        [SerializeField,Range(0,1)] private float _baseSfxVolume;
-        [SerializeField, Range(0, 1)] private float _baseLoopVolume;
+        [SerializeField,Range(0,20)] private float _baseSfxVolume;
+        [SerializeField, Range(0, 20)] private float _baseLoopVolume;
         [SerializeField] private float _disableVolume;
         [SerializeField] private float _fadeSpeed;
         [SerializeField] private AudioMixer _audioMixer;
