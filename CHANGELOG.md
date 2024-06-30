@@ -1,3 +1,6 @@
+  version : 0.1.4
+  Add WaitForLoadingCoroutine in audio system
+
   version : 0.1.3
   Increase audio base volume in editor to 20 db
 

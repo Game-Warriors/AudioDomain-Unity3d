@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections;
 
 namespace GameWarriors.AudioDomain.Core
 {
@@ -90,6 +91,12 @@ namespace GameWarriors.AudioDomain.Core
             {
                 await Task.Delay(100);
             }
+        }
+
+        [UnityEngine.Scripting.Preserve]
+        public IEnumerator WaitForLoadingCoroutine()
+        {
+            yield return new WaitUntil(() => _clipTable != null);
         }
 
         public void AddAudioClip(params AudioClip[] audioList)
