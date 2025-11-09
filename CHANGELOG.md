@@ -1,3 +1,6 @@
+  version : 0.1.5
+  implement getting asset path when editor windows initialize
+
   version : 0.1.4
   Add WaitForLoadingCoroutine in audio system
 

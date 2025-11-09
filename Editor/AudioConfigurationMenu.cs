@@ -19,6 +19,8 @@ namespace GameWarriors.AudioDomain.Editor
         [SerializeField] private AudioSource _sfxSourceSample;
         [SerializeField] private AudioClip[] _clipItems;
 
+        private string _assetPath;
+
         [MenuItem("Tools/Audio Configuration")]
         private static void OpenBuildConfigWindow()
         {
@@ -26,12 +28,13 @@ namespace GameWarriors.AudioDomain.Editor
                 Directory.CreateDirectory("Assets/AssetData/Resources");
 
             AudioConfigurationMenu tmp = DisplayWizard<AudioConfigurationMenu>("Audio Configuration", "Save");
-            tmp.Initialization();
+            tmp.Initialize(AudioConfigData.ASSET_PATH);
         }
 
-        private void Initialization()
+        public void Initialize(string assetPath)
         {
-            AudioConfigData asset = AssetDatabase.LoadAssetAtPath<AudioConfigData>(AudioConfigData.ASSET_PATH);
+            _assetPath = assetPath;
+            AudioConfigData asset = AssetDatabase.LoadAssetAtPath<AudioConfigData>(assetPath);
             if (asset != null)
             {
                 _baseSfxVolume = asset.BaseSfxVolume;
@@ -48,7 +51,7 @@ namespace GameWarriors.AudioDomain.Editor
 
         private void OnWizardCreate()
         {
-            AudioConfigData asset = AssetDatabase.LoadAssetAtPath<AudioConfigData>(AudioConfigData.ASSET_PATH);
+            AudioConfigData asset = AssetDatabase.LoadAssetAtPath<AudioConfigData>(_assetPath);
             if (asset != null)
             {
                 asset.SetClips(_clipItems);
@@ -62,7 +65,7 @@ namespace GameWarriors.AudioDomain.Editor
                 asset.SetClips(_clipItems);
                 asset.SetVolumeAndMixer(_baseLoopVolume, _baseSfxVolume, _disableVolume, _audioMixer, _fadeSpeed);
                 asset.SetAudioSource(_loopSourceSample, _sfxSourceSample, _sfxSourceCount);
-                AssetDatabase.CreateAsset(asset, AudioConfigData.ASSET_PATH);
+                AssetDatabase.CreateAsset(asset, _assetPath);
             }
             AssetDatabase.SaveAssets();
         }

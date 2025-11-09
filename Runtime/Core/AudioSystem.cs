@@ -75,9 +75,10 @@ namespace GameWarriors.AudioDomain.Core
         }
 
         [UnityEngine.Scripting.Preserve]
-        public AudioSystem(IAudioEventHandler audioEventHandler)
+        public AudioSystem(IAudioEventHandler audioEventHandler, IAudioResourceLoader audioResourceLoader)
         {
-            IAudioResourceLoader audioResourceLoader = new DefaultResourceLoader();
+            if (audioResourceLoader == null)
+                audioResourceLoader = new DefaultResourceLoader();
             audioResourceLoader.LoadResourceAsync(AudioConfigData.RESOURCE_PATH, LoadComplete);
             _audioEventHandler = audioEventHandler;
             _audioEventHandler?.RegisterUpdate(AudioUpdate);
