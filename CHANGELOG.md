@@ -1,3 +1,6 @@
+  version : 0.1.6
+  remove audio event and add IAudioSystem abstraction
+
   version : 0.1.5
   implement getting asset path when editor windows initialize
 

@@ -1,5 +1,4 @@
-﻿using System;
-using GameWarriors.AudioDomain.Abstraction;
+﻿using GameWarriors.AudioDomain.Abstraction;
 using GameWarriors.AudioDomain.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,12 +8,12 @@ using System.Collections;
 
 namespace GameWarriors.AudioDomain.Core
 {
-    public class AudioSystem : IAudioEffect, IAudioLoop
+    public class AudioSystem : IAudioEffect, IAudioLoop, IAudioSystem
     {
         private const string SFX_VOLUME_NAME = "SFXVolume";
         private const string LOOP_VOLUME_NAME = "LoopVolume";
         private const int LOOP_GROUP_COUNT = 3;
-        private readonly IAudioEventHandler _audioEventHandler;
+
         private AudioSource[] _onShotSource;
         private int _onShotCounter;
         private LoopAudioGroup[] _loopSource;
@@ -75,13 +74,11 @@ namespace GameWarriors.AudioDomain.Core
         }
 
         [UnityEngine.Scripting.Preserve]
-        public AudioSystem(IAudioEventHandler audioEventHandler, IAudioResourceLoader audioResourceLoader)
+        public AudioSystem(IAudioResourceLoader audioResourceLoader)
         {
             if (audioResourceLoader == null)
                 audioResourceLoader = new DefaultResourceLoader();
             audioResourceLoader.LoadResourceAsync(AudioConfigData.RESOURCE_PATH, LoadComplete);
-            _audioEventHandler = audioEventHandler;
-            _audioEventHandler?.RegisterUpdate(AudioUpdate);
         }
 
 
@@ -173,7 +170,7 @@ namespace GameWarriors.AudioDomain.Core
             _loopSource[(int)loopGroup].ChangeVolumeFade(targetVolume);
         }
 
-        public float GetClipLength(string audioName)
+        float IAudioLoop.GetClipLength(string audioName)
         {
             if (_clipTable.TryGetValue(audioName, out var clip))
             {
@@ -181,15 +178,6 @@ namespace GameWarriors.AudioDomain.Core
             }
 
             return -1;
-        }
-
-        private void AudioUpdate()
-        {
-            for (int i = 0; i < LOOP_GROUP_COUNT; ++i)
-            {
-                if (_loopSource[i].IsUpdate)
-                    _loopSource[i].FadeUpdate(_fadeSpeed);
-            }
         }
 
         private void LoadComplete(AudioConfigData configData)
@@ -240,6 +228,15 @@ namespace GameWarriors.AudioDomain.Core
             ++_onShotCounter;
             _onShotCounter %= _onShotSource.Length;
             return source;
+        }
+
+        void IAudioSystem.UpdateSystem()
+        {
+            for (int i = 0; i < LOOP_GROUP_COUNT; ++i)
+            {
+                if (_loopSource[i].IsUpdate)
+                    _loopSource[i].FadeUpdate(_fadeSpeed);
+            }
         }
     }
 }
